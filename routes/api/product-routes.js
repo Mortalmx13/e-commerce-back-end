@@ -8,16 +8,18 @@ router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   Product.findAll({
-    include: {
-      model: Product,
-      attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+    include: [{
+      model: Category,
+      attributes: ['id', 'category_name']
+    },
+    {
+      model: Tag,
+      attributes: ['id', 'tag_name']
     }
+  ]
+    
   })
     .then(dbprodData => {
-      if (!dbprodData) {
-        res.status(404).json({message: 'Categories was not found'});
-        return;
-      }
       res.json(dbprodData);
     })
     .catch(err => {
@@ -30,6 +32,31 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  Product.findOne({
+    where: { id: req.params.id },
+    include:  [
+      {
+        model: Category,
+        attributes: ['id', 'category_name']
+      },
+      {
+        model: Tag,
+        attributes: ['id', 'tag_name']
+      }
+    ]
+  })
+    .then(dbprodData => {
+      if (!dbprodData) {
+        res.status(404).json({message: 'Product was not found'});
+        return;
+      }
+
+      res.json(dbprodData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err)
+    });
 });
 
 // create new product
