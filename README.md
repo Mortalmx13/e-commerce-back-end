@@ -11,7 +11,7 @@ This was to set up a server that would allow the user to make theri own inputs a
 
 ## Visuals
 ![Back End code](/Capture1.PNG)
+![Video](./New-Tab.gif)
 
 ## Resources
 - [Respository](https://github.com/Mortalmx13/e-commerce-back-end)
-- [Video](./New-Tab.gif)
